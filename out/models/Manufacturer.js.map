@@ -1,0 +1,1 @@
+{"version":3,"file":"Manufacturer.js","sourceRoot":"","sources":["../../src/models/Manufacturer.ts"],"names":[],"mappings":";;;AAAA,+BAA0B;AAE1B,MAAa,YAAY;IAKvB,YAAY,KAA+B,EAAE,EAAW;QACtD,MAAM,CAAC,MAAM,CAAC,IAAI,EAAE,KAAK,CAAC,CAAC;QAE3B,IAAI,CAAC,EAAE,EAAE;YACP,IAAI,CAAC,EAAE,GAAG,SAAE,EAAE,CAAC;SAChB;IACH,CAAC;CACF;AAZD,oCAYC"}
