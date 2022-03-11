@@ -4,8 +4,6 @@ import { IUpdateEquipmentDTO } from "../../useCases/Equipment/UpdateEquipment/Up
 
 import client from "../../db";
 import { Manufacturer } from "../../entities/Manufacturer";
-import { callbackPromise } from "nodemailer/lib/shared";
-import { response } from "express";
 const { Client } = require("pg");
 
 export class PostgresEquipmentsRepository implements IEquipmentRepository {
