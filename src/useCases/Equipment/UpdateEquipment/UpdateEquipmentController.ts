@@ -1,24 +1,25 @@
 import { Request, Response } from "express";
-import { UpdateEquipmentUseCase } from "./UpdateEquipmentUseCase";
+import { UpdateEquipmentService } from "./UpdateEquipmentService";
+import { Manufacturer } from "../../../entities/Manufacturer";
 
 export class UpdateEquipmentController {
-  constructor(private createEquipmentUseCase: UpdateEquipmentUseCase) {}
+  constructor(private createEquipmentService: UpdateEquipmentService) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { model } = req.body;
-    const id = req.params["id"];
+    const { id } = req.params;
+    const { model, serialNumber, manufacturerId } = req.body;
 
-    try {
-      await this.createEquipmentUseCase.execute({
-        id,
-        model,
-      });
+    const result = await this.createEquipmentService.execute({
+      id,
+      model,
+      serialNumber,
+      manufacturerId,
+    });
 
-      return res.status(201).send();
-    } catch (err) {
-      return res.status(400).json({
-        message: err.message || "Unexpected error.",
-      });
+    if (result instanceof Error) {
+      return res.status(400).json(result.message);
     }
+
+    return res.status(200).send(result);
   }
 }

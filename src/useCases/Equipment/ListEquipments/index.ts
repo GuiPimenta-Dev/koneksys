@@ -1,15 +1,15 @@
 import { PostgresEquipmentsRepository } from "../../../repositories/implementations/PostgresEquipmentRepository";
-import { ListEquipmentsUseCase } from "./ListEquipmentsUseCase";
+import { ListEquipmentsService } from "./ListEquipmentsService";
 import { ListEquipmentsController } from "./ListEquipmentsController";
 
 const postgresEquipmentsRepository = new PostgresEquipmentsRepository();
 
-const listEquipmentsUseCase = new ListEquipmentsUseCase(
+const listEquipmentsService = new ListEquipmentsService(
   postgresEquipmentsRepository
 );
 
 const listEquipmentsController = new ListEquipmentsController(
-  listEquipmentsUseCase
+  listEquipmentsService
 );
 
-export { listEquipmentsUseCase, listEquipmentsController };
+export { listEquipmentsService, listEquipmentsController };

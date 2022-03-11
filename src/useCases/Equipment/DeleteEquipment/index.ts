@@ -1,15 +1,15 @@
 import { PostgresEquipmentsRepository } from "../../../repositories/implementations/PostgresEquipmentRepository";
-import { DeleteEquipmentUseCase } from "./DeleteEquipmentUseCase";
+import { DeleteEquipmentService } from "./DeleteEquipmentService";
 import { DeleteEquipmentController } from "./DeleteEquipmentController";
 
 const postgresEquipmentsRepository = new PostgresEquipmentsRepository();
 
-const deleteEquipmentUseCase = new DeleteEquipmentUseCase(
+const deleteEquipmentService = new DeleteEquipmentService(
   postgresEquipmentsRepository
 );
 
 const deleteEquipmentController = new DeleteEquipmentController(
-  deleteEquipmentUseCase
+  deleteEquipmentService
 );
 
-export { deleteEquipmentUseCase, deleteEquipmentController };
+export { deleteEquipmentService, deleteEquipmentController };

@@ -2,14 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateEquipmentController = void 0;
 class CreateEquipmentController {
-    constructor(createEquipmentUseCase) {
-        this.createEquipmentUseCase = createEquipmentUseCase;
+    constructor(createEquipmentService) {
+        this.createEquipmentService = createEquipmentService;
     }
     async handle(req, res) {
-        const { model } = req.body;
+        const { model, manufacturerId } = req.body;
         try {
-            await this.createEquipmentUseCase.execute({
+            await this.createEquipmentService.execute({
                 model,
+                manufacturerId,
             });
             return res.status(201).send();
         }

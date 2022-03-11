@@ -1,15 +1,15 @@
 import { PostgresManufacturersRepository } from "../../../repositories/implementations/PostgresManufacturerRepository";
-import { DeleteManufacturerUseCase } from "./DeleteManufacturerUseCase";
+import { DeleteManufacturerService } from "./DeleteManufacturerService";
 import { DeleteManufacturerController } from "./DeleteManufacturerController";
 
 const postgresManufacturersRepository = new PostgresManufacturersRepository();
 
-const deleteManufacturerUseCase = new DeleteManufacturerUseCase(
+const deleteManufacturerService = new DeleteManufacturerService(
   postgresManufacturersRepository
 );
 
 const deleteManufacturerController = new DeleteManufacturerController(
-  deleteManufacturerUseCase
+  deleteManufacturerService
 );
 
-export { deleteManufacturerUseCase, deleteManufacturerController };
+export { deleteManufacturerService, deleteManufacturerController };

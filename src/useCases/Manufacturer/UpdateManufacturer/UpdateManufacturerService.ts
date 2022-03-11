@@ -1,7 +1,7 @@
 import { IManufacturerRepository } from "../../../repositories/IManufacturerRepository";
 import { IUpdateManufacturerDTO } from "./UpdateManufacturerDTO";
 
-export class UpdateManufacturerUseCase {
+export class UpdateManufacturerService {
   constructor(private manufacturersRepository: IManufacturerRepository) {}
 
   async execute(data: IUpdateManufacturerDTO) {

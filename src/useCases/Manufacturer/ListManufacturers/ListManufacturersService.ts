@@ -1,9 +1,9 @@
 import { IManufacturerRepository } from "../../../repositories/IManufacturerRepository";
 
-export class DeleteManufacturerUseCase {
+export class ListManufacturersService {
   constructor(private manufacturersRepository: IManufacturerRepository) {}
 
-  async execute(id: string) {
-    await this.manufacturersRepository.delete(id);
+  async execute() {
+    return await this.manufacturersRepository.listAll();
   }
 }

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "ListManufacturerUseCase.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../../../src/useCases/Manufacturer/ListManufacturer copy/ListManufacturerUseCase.ts"
+  ],
+  "names": [],
+  "mappings": ";;;AAEA,MAAa,uBAAuB;IAClC,YAAoB,sBAA+C;QAA/C,2BAAsB,GAAtB,sBAAsB,CAAyB;IAAG,CAAC;IAEvE,KAAK,CAAC,OAAO,CAAC,EAAU;QACtB,OAAO,MAAM,IAAI,CAAC,sBAAsB,CAAC,OAAO,CAAC,EAAE,CAAC,CAAC;IACvD,CAAC;CACF;AAND,0DAMC"
+}

@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
-import { CreateEquipmentUseCase } from "./CreateEquipmentUseCase";
+import { CreateEquipmentService } from "./CreateEquipmentService";
 
 export class CreateEquipmentController {
-  constructor(private createEquipmentUseCase: CreateEquipmentUseCase) {}
+  constructor(private createEquipmentService: CreateEquipmentService) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { model } = req.body;
+    const { model, manufacturerId } = req.body;
 
     try {
-      await this.createEquipmentUseCase.execute({
+      await this.createEquipmentService.execute({
         model,
+        manufacturerId,
       });
 
       return res.status(201).send();

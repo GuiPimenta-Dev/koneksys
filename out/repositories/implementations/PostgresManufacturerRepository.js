@@ -10,6 +10,16 @@ class PostgresManufacturersRepository {
     constructor() {
         this.db = db_1.default;
     }
+    async findById(id) {
+        const { rows } = await this.db.query("SELECT id FROM manufacturer WHERE id = $1", [id]);
+        return rows[0];
+    }
+    async listEquipments(id) {
+        const { rows } = await this.db.query("SELECT e.id, e.model, e.serial_number FROM manufacturer m \
+      LEFT JOIN equipment e ON m.id = e.manufacturer_id \
+      WHERE e.manufacturer_id = $1", [id]);
+        return rows;
+    }
     async save(manufacturer) {
         this.db.query("INSERT INTO manufacturer VALUES ($1,$2)", [
             manufacturer.id,

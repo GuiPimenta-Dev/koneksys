@@ -1,6 +1,6 @@
 import { IManufacturerRepository } from "../../../repositories/IManufacturerRepository";
 
-export class ListManufacturerUseCase {
+export class ListManufacturerService {
   constructor(private manufacturerRepository: IManufacturerRepository) {}
 
   async execute(id: string) {

@@ -1,20 +1,18 @@
 import { Request, Response } from "express";
-import { DeleteEquipmentUseCase } from "./DeleteEquipmentUseCase";
+import { DeleteEquipmentService } from "./DeleteEquipmentService";
 
 export class DeleteEquipmentController {
-  constructor(private deleteEquipmentUseCase: DeleteEquipmentUseCase) {}
+  constructor(private deleteEquipmentService: DeleteEquipmentService) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const id = req.params["id"];
+    const { id } = req.params;
 
-    try {
-      await this.deleteEquipmentUseCase.execute(id);
+    const result = await this.deleteEquipmentService.execute(id);
 
-      return res.status(201).send();
-    } catch (err) {
-      return res.status(400).json({
-        message: err.message || "Unexpected error.",
-      });
+    if (result instanceof Error) {
+      return res.status(400).json(result.message);
     }
+
+    return res.status(201).send();
   }
 }

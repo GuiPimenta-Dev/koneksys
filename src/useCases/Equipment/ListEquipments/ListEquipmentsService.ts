@@ -1,9 +1,9 @@
 import { IEquipmentRepository } from "../../../repositories/IEquipmentRepository";
 
-export class ListEquipmentUseCase {
+export class ListEquipmentsService {
   constructor(private equipmentRepository: IEquipmentRepository) {}
 
-  async execute(id: string) {
-    return await this.equipmentRepository.listOne(id);
+  async execute() {
+    return await this.equipmentRepository.listAll();
   }
 }

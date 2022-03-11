@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { ListManufacturersUseCase } from "./ListManufacturersUseCase";
+import { ListManufacturersService } from "./ListManufacturersService";
 
 export class ListManufacturersController {
-  constructor(private createManufacturerUseCase: ListManufacturersUseCase) {}
+  constructor(private createManufacturerService: ListManufacturersService) {}
 
   async handle(res: Response): Promise<Response> {
     try {
-      const manufacturer = await this.createManufacturerUseCase.execute();
+      const manufacturer = await this.createManufacturerService.execute();
       return res.status(200).send(manufacturer);
     } catch (err) {
       return res.status(400).json({

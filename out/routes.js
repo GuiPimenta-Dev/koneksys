@@ -12,6 +12,7 @@ const ListEquipments_1 = require("./useCases/Equipment/ListEquipments");
 const DeleteManufacturer_1 = require("./useCases/Manufacturer/DeleteManufacturer");
 const UpdateEquipment_1 = require("./useCases/Equipment/UpdateEquipment");
 const DeleteEquipment_1 = require("./useCases/Equipment/DeleteEquipment");
+const ListManufacturerEquipments_1 = require("./useCases/Manufacturer/ListManufacturerEquipments");
 const router = express_1.Router();
 exports.router = router;
 router.post("/manufacturer", (req, res) => {
@@ -22,6 +23,9 @@ router.get("/manufacturer", (_, res) => {
 });
 router.get("/manufacturer/:id", (req, res) => {
     return ListManufacturer_1.listManufacturerController.handle(req, res);
+});
+router.get("/manufacturer/equipments/:id", (req, res) => {
+    return ListManufacturerEquipments_1.listManufacturerEquipmentsController.handle(req, res);
 });
 router.put("/manufacturer/:id", (req, res) => {
     return UpdateManufacturer_1.updateManufacturerController.handle(req, res);

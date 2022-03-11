@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { CreateManufacturerUseCase } from "./CreateManufacturerUseCase";
+import { CreateManufacturerService } from "./CreateManufacturerService";
 
 export class CreateManufacturerController {
-  constructor(private createManufacturerUseCase: CreateManufacturerUseCase) {}
+  constructor(private createManufacturerService: CreateManufacturerService) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { name } = req.body;
 
     try {
-      await this.createManufacturerUseCase.execute({
+      await this.createManufacturerService.execute({
         name,
       });
 

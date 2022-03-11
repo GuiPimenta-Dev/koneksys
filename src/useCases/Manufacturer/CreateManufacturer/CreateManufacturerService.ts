@@ -1,8 +1,8 @@
 import { IManufacturerRepository } from "../../../repositories/IManufacturerRepository";
 import { ICreateManufacturerDTO } from "./CreateManufacturerDTO";
-import { Manufacturer } from "../../../models/Manufacturer";
+import { Manufacturer } from "../../../entities/Manufacturer";
 
-export class CreateManufacturerUseCase {
+export class CreateManufacturerService {
   constructor(private manufacturersRepository: IManufacturerRepository) {}
 
   async execute(data: ICreateManufacturerDTO) {

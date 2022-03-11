@@ -1,8 +1,8 @@
 import { IEquipmentRepository } from "../../../repositories/IEquipmentRepository";
 import { ICreateEquipmentDTO } from "./CreateEquipmentDTO";
-import { Equipment } from "../../../models/Equipment";
+import { Equipment } from "../../../entities/Equipment";
 
-export class CreateEquipmentUseCase {
+export class CreateEquipmentService {
   constructor(private equipmentRepository: IEquipmentRepository) {}
 
   async execute(data: ICreateEquipmentDTO) {

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listManufacturersController = exports.listManufacturerUseCase = void 0;
+exports.listManufacturersController = exports.listManufacturerService = void 0;
 const PostgresManufacturerRepository_1 = require("../../../repositories/implementations/PostgresManufacturerRepository");
-const ListManufacturersUseCase_1 = require("./ListManufacturersUseCase");
+const ListManufacturersService_1 = require("./ListManufacturersService");
 const ListManufacturersController_1 = require("./ListManufacturersController");
 const postgresManufacturersRepository = new PostgresManufacturerRepository_1.PostgresManufacturersRepository();
-const listManufacturerUseCase = new ListManufacturersUseCase_1.ListManufacturersUseCase(postgresManufacturersRepository);
-exports.listManufacturerUseCase = listManufacturerUseCase;
-const listManufacturersController = new ListManufacturersController_1.ListManufacturersController(listManufacturerUseCase);
+const listManufacturerService = new ListManufacturersService_1.ListManufacturersService(postgresManufacturersRepository);
+exports.listManufacturerService = listManufacturerService;
+const listManufacturersController = new ListManufacturersController_1.ListManufacturersController(listManufacturerService);
 exports.listManufacturersController = listManufacturersController;
 //# sourceMappingURL=index.js.map

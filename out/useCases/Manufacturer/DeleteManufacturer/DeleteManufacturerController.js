@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteManufacturerController = void 0;
 class DeleteManufacturerController {
-    constructor(deleteManufacturerUseCase) {
-        this.deleteManufacturerUseCase = deleteManufacturerUseCase;
+    constructor(deleteManufacturerService) {
+        this.deleteManufacturerService = deleteManufacturerService;
     }
     async handle(req, res) {
-        const id = req.params["id"];
+        const { id } = req.params;
         try {
-            await this.deleteManufacturerUseCase.execute(id);
+            await this.deleteManufacturerService.execute(id);
             return res.status(201).send();
         }
         catch (err) {

@@ -2,20 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteEquipmentController = void 0;
 class DeleteEquipmentController {
-    constructor(deleteEquipmentUseCase) {
-        this.deleteEquipmentUseCase = deleteEquipmentUseCase;
+    constructor(deleteEquipmentService) {
+        this.deleteEquipmentService = deleteEquipmentService;
     }
     async handle(req, res) {
-        const id = req.params["id"];
-        try {
-            await this.deleteEquipmentUseCase.execute(id);
-            return res.status(201).send();
+        const { id } = req.params;
+        const result = await this.deleteEquipmentService.execute(id);
+        if (result instanceof Error) {
+            return res.status(400).json(result.message);
         }
-        catch (err) {
-            return res.status(400).json({
-                message: err.message || "Unexpected error.",
-            });
-        }
+        return res.status(201).send();
     }
 }
 exports.DeleteEquipmentController = DeleteEquipmentController;

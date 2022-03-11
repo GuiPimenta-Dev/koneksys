@@ -6,6 +6,7 @@ export class Equipment {
   public readonly serialNumber: string;
 
   public model: string;
+  public manufacturerId: string;
 
   constructor(props: Omit<Equipment, "id" | "serialNumber">, id?: string) {
     Object.assign(this, props);

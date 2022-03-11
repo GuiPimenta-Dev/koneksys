@@ -2,24 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateEquipmentController = void 0;
 class UpdateEquipmentController {
-    constructor(createEquipmentUseCase) {
-        this.createEquipmentUseCase = createEquipmentUseCase;
+    constructor(createEquipmentService) {
+        this.createEquipmentService = createEquipmentService;
     }
     async handle(req, res) {
-        const { model } = req.body;
-        const id = req.params["id"];
-        try {
-            await this.createEquipmentUseCase.execute({
-                id,
-                model,
-            });
-            return res.status(201).send();
+        const { id } = req.params;
+        const { model, serialNumber, manufacturerId } = req.body;
+        const result = await this.createEquipmentService.execute({
+            id,
+            model,
+            serialNumber,
+            manufacturerId,
+        });
+        if (result instanceof Error) {
+            return res.status(400).json(result.message);
         }
-        catch (err) {
-            return res.status(400).json({
-                message: err.message || "Unexpected error.",
-            });
-        }
+        return res.status(200).send(result);
     }
 }
 exports.UpdateEquipmentController = UpdateEquipmentController;

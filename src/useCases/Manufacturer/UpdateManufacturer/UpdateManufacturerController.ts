@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-import { UpdateManufacturerUseCase } from "./UpdateManufacturerUseCase";
+import { UpdateManufacturerService } from "./UpdateManufacturerService";
 
 export class UpdateManufacturerController {
-  constructor(private createManufacturerUseCase: UpdateManufacturerUseCase) {}
+  constructor(private createManufacturerService: UpdateManufacturerService) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
     const { name } = req.body;
-    const id = req.params["id"];
 
     try {
-      await this.createManufacturerUseCase.execute({
+      await this.createManufacturerService.execute({
         id,
         name,
       });

@@ -1,15 +1,15 @@
 import { PostgresManufacturersRepository } from "../../../repositories/implementations/PostgresManufacturerRepository";
-import { CreateManufacturerUseCase } from "./CreateManufacturerUseCase";
+import { CreateManufacturerService } from "./CreateManufacturerService";
 import { CreateManufacturerController } from "./CreateManufacturerController";
 
 const postgresManufacturersRepository = new PostgresManufacturersRepository();
 
-const createManufacturerUseCase = new CreateManufacturerUseCase(
+const createManufacturerService = new CreateManufacturerService(
   postgresManufacturersRepository
 );
 
 const createManufacturerController = new CreateManufacturerController(
-  createManufacturerUseCase
+  createManufacturerService
 );
 
-export { createManufacturerUseCase, createManufacturerController };
+export { createManufacturerService, createManufacturerController };

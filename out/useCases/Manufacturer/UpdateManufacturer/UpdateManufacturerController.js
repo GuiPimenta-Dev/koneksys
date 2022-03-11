@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateManufacturerController = void 0;
 class UpdateManufacturerController {
-    constructor(createManufacturerUseCase) {
-        this.createManufacturerUseCase = createManufacturerUseCase;
+    constructor(createManufacturerService) {
+        this.createManufacturerService = createManufacturerService;
     }
     async handle(req, res) {
+        const { id } = req.params;
         const { name } = req.body;
-        const id = req.params["id"];
         try {
-            await this.createManufacturerUseCase.execute({
+            await this.createManufacturerService.execute({
                 id,
                 name,
             });
