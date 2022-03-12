@@ -6,9 +6,9 @@ class CreateManufacturerService {
     constructor(manufacturersRepository) {
         this.manufacturersRepository = manufacturersRepository;
     }
-    async execute(data) {
-        const manufacturer = new Manufacturer_1.Manufacturer(data);
-        await this.manufacturersRepository.save(manufacturer);
+    async execute(dto) {
+        const manufacturer = new Manufacturer_1.Manufacturer(dto);
+        return await this.manufacturersRepository.save(manufacturer);
     }
 }
 exports.CreateManufacturerService = CreateManufacturerService;

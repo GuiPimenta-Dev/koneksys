@@ -1,8 +1,8 @@
 import { PostgresEquipmentsRepository } from "../../../repositories/implementations/PostgresEquipmentRepository";
 import { ListEquipmentOwnerService } from "./ListEquipmentOwnerService";
 import { ListEquipmentOwnerController } from "./ListEquipmentOwnerController";
-
-const postgresEquipmentsRepository = new PostgresEquipmentsRepository();
+import client from "../../../db";
+const postgresEquipmentsRepository = new PostgresEquipmentsRepository(client);
 
 const listEquipmentOwnerService = new ListEquipmentOwnerService(
   postgresEquipmentsRepository

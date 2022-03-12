@@ -2,9 +2,12 @@ import { PostgresEquipmentsRepository } from "../../../repositories/implementati
 import { UpdateEquipmentService } from "./UpdateEquipmentService";
 import { UpdateEquipmentController } from "./UpdateEquipmentController";
 import { PostgresManufacturersRepository } from "../../../repositories/implementations/PostgresManufacturerRepository";
+import client from "../../../db";
 
-const postgresEquipmentsRepository = new PostgresEquipmentsRepository();
-const postgresManufacturersRepository = new PostgresManufacturersRepository();
+const postgresEquipmentsRepository = new PostgresEquipmentsRepository(client);
+const postgresManufacturersRepository = new PostgresManufacturersRepository(
+  client
+);
 
 const updateEquipmentService = new UpdateEquipmentService(
   postgresEquipmentsRepository,

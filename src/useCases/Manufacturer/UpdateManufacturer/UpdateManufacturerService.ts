@@ -2,9 +2,14 @@ import { IManufacturerRepository } from "../../../repositories/IManufacturerRepo
 import { IUpdateManufacturerDTO } from "./UpdateManufacturerDTO";
 
 export class UpdateManufacturerService {
-  constructor(private manufacturersRepository: IManufacturerRepository) {}
+  constructor(private manufacturerRepository: IManufacturerRepository) {}
 
-  async execute(data: IUpdateManufacturerDTO) {
-    await this.manufacturersRepository.update(data);
+  async execute(dto: IUpdateManufacturerDTO) {
+    const manufacturer = await this.manufacturerRepository.findById(dto.id);
+
+    if (!manufacturer) {
+      return new Error("This Manufacturer does not exists!");
+    }
+    return await this.manufacturerRepository.update(dto);
   }
 }

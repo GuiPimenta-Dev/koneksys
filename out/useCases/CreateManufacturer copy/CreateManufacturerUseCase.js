@@ -11,7 +11,7 @@ class CreateManufacturerUseCase {
     const manufacturerAlreadyExists =
       await this.manufacturersRepository.findByName(data.name);
     if (manufacturerAlreadyExists) {
-      throw new Error("Manufacturer already exists.");
+      return new Error("Manufacturer already exists.");
     }
     const manufacturer = new Manufacturer_1.Manufacturer(data);
     await this.manufacturersRepository.save(manufacturer);

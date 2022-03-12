@@ -7,10 +7,7 @@ class DeleteEquipmentController {
     }
     async handle(req, res) {
         const { id } = req.params;
-        const result = await this.deleteEquipmentService.execute(id);
-        if (result instanceof Error) {
-            return res.status(400).json(result.message);
-        }
+        await this.deleteEquipmentService.execute(id);
         return res.status(201).send();
     }
 }

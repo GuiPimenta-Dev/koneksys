@@ -7,7 +7,7 @@ export interface IManufacturerRepository {
   listOne(id: string): Promise<Manufacturer>;
   listEquipments(id: string): Promise<Equipment[]>;
   findById(id: string): Promise<string>;
-  save(manufacturer: Manufacturer): Promise<void>;
-  update(dto: IUpdateManufacturerDTO): Promise<void>;
+  save(manufacturer: Manufacturer): Promise<Manufacturer>;
+  update(dto: IUpdateManufacturerDTO): Promise<Manufacturer>;
   delete(id: string): Promise<void>;
 }

@@ -7,17 +7,15 @@ export class CreateEquipmentController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { model, manufacturerId } = req.body;
 
-    try {
-      await this.createEquipmentService.execute({
-        model,
-        manufacturerId,
-      });
+    const result = await this.createEquipmentService.execute({
+      model,
+      manufacturerId,
+    });
 
-      return res.status(201).send();
-    } catch (err) {
-      return res.status(400).json({
-        message: err.message || "Unexpected error.",
-      });
+    if (result instanceof Error) {
+      return res.status(400).json(result.message);
     }
+
+    return res.status(201).send();
   }
 }

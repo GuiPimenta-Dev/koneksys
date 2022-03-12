@@ -5,9 +5,13 @@ import { Manufacturer } from "../../../entities/Manufacturer";
 export class CreateManufacturerService {
   constructor(private manufacturersRepository: IManufacturerRepository) {}
 
-  async execute(data: ICreateManufacturerDTO) {
-    const manufacturer = new Manufacturer(data);
+  async execute(dto: ICreateManufacturerDTO) {
+    if (!dto) {
+      return Error("You need to send the manufacturer`s name!");
+    }
 
-    await this.manufacturersRepository.save(manufacturer);
+    const manufacturer = new Manufacturer(dto);
+
+    return await this.manufacturersRepository.save(manufacturer);
   }
 }

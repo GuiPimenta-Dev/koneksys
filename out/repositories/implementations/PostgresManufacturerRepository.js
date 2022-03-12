@@ -1,23 +1,19 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostgresManufacturersRepository = void 0;
-const db_1 = __importDefault(require("../../db"));
 const { Client } = require("pg");
 class PostgresManufacturersRepository {
-    constructor() {
-        this.db = db_1.default;
+    constructor(client) {
+        this.db = client;
     }
     async findById(id) {
         const { rows } = await this.db.query("SELECT id FROM manufacturer WHERE id = $1", [id]);
         return rows[0];
     }
     async listEquipments(id) {
-        const { rows } = await this.db.query("SELECT e.id, e.model, e.serial_number FROM manufacturer m \
-      LEFT JOIN equipment e ON m.id = e.manufacturer_id \
-      WHERE e.manufacturer_id = $1", [id]);
+        const { rows } = await this.db.query('SELECT e.id, e.model, e."serialNumber" FROM manufacturer m \
+      LEFT JOIN equipment e ON m.id = e."manufacturerId" \
+      WHERE e."manufacturerId" = $1', [id]);
         return rows;
     }
     async save(manufacturer) {
@@ -25,6 +21,7 @@ class PostgresManufacturersRepository {
             manufacturer.id,
             manufacturer.name,
         ]);
+        return manufacturer;
     }
     async listAll() {
         const { rows } = await this.db.query("SELECT id,name FROM manufacturer");

@@ -11,6 +11,7 @@ import { deleteManufacturerController } from "./useCases/Manufacturer/DeleteManu
 import { updateEquipmentController } from "./useCases/Equipment/UpdateEquipment";
 import { deleteEquipmentController } from "./useCases/Equipment/DeleteEquipment";
 import { listManufacturerEquipmentsController } from "./useCases/Manufacturer/ListManufacturerEquipments";
+import { listEquipmentOwnerController } from "./useCases/Equipment/ListEquipmentOwner";
 
 const router = Router();
 
@@ -41,6 +42,9 @@ router.get("/equipment", (_, res) => {
 });
 router.get("/equipment/:id", (req, res) => {
   return listEquipmentController.handle(req, res);
+});
+router.get("/equipment/manufacturer/:id", (req, res) => {
+  return listEquipmentOwnerController.handle(req, res);
 });
 router.put("/equipment/:id", (req, res) => {
   return updateEquipmentController.handle(req, res);

@@ -7,7 +7,7 @@ export interface IEquipmentRepository {
   listOne(id: string): Promise<Equipment>;
   findById(id: string): Promise<string>;
   listOwner(id: string): Promise<Manufacturer>;
-  save(equipment: Equipment): Promise<void>;
+  save(equipment: Equipment): Promise<Equipment>;
   update(dto: IUpdateEquipmentDTO): Promise<Equipment | Error>;
   delete(id: string): Promise<void>;
 }

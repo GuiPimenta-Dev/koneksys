@@ -1,9 +1,14 @@
 import { IManufacturerRepository } from "../../../repositories/IManufacturerRepository";
 
 export class DeleteManufacturerService {
-  constructor(private manufacturersRepository: IManufacturerRepository) {}
+  constructor(private manufacturerRepository: IManufacturerRepository) {}
 
   async execute(id: string) {
-    await this.manufacturersRepository.delete(id);
+    const manufacturer = await this.manufacturerRepository.findById(id);
+
+    if (!manufacturer) {
+      return new Error("This Manufacturer does not exists!");
+    }
+    await this.manufacturerRepository.delete(id);
   }
 }

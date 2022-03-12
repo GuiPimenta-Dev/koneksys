@@ -1,8 +1,6 @@
 import { IManufacturerRepository } from "../IManufacturerRepository";
 import { Manufacturer } from "../../entities/Manufacturer";
 import { IUpdateManufacturerDTO } from "../../useCases/Manufacturer/UpdateManufacturer/UpdateManufacturerDTO";
-
-import client from "../../db";
 import { Equipment } from "../../entities/Equipment";
 const { Client } = require("pg");
 
@@ -10,7 +8,7 @@ export class PostgresManufacturersRepository
   implements IManufacturerRepository
 {
   private db: typeof Client;
-  constructor() {
+  constructor(client) {
     this.db = client;
   }
 
@@ -24,19 +22,20 @@ export class PostgresManufacturersRepository
 
   async listEquipments(id: string): Promise<Equipment[]> {
     const { rows } = await this.db.query(
-      "SELECT e.id, e.model, e.serial_number FROM manufacturer m \
-      LEFT JOIN equipment e ON m.id = e.manufacturer_id \
-      WHERE e.manufacturer_id = $1",
+      'SELECT e.id, e.model, e."serialNumber" FROM manufacturer m \
+      LEFT JOIN equipment e ON m.id = e."manufacturerId" \
+      WHERE e."manufacturerId" = $1',
       [id]
     );
     return rows;
   }
 
-  async save(manufacturer: Manufacturer): Promise<void> {
+  async save(manufacturer: Manufacturer): Promise<Manufacturer> {
     this.db.query("INSERT INTO manufacturer VALUES ($1,$2)", [
       manufacturer.id,
       manufacturer.name,
     ]);
+    return manufacturer;
   }
 
   async listAll(): Promise<Manufacturer[]> {
@@ -50,11 +49,12 @@ export class PostgresManufacturersRepository
     );
     return rows[0];
   }
-  async update(dto: IUpdateManufacturerDTO): Promise<void> {
+  async update(dto: IUpdateManufacturerDTO): Promise<Manufacturer> {
     this.db.query("UPDATE manufacturer SET name = $1 WHERE id = $2", [
       dto.name,
       dto.id,
     ]);
+    return dto;
   }
   async delete(id: string): Promise<void> {
     this.db.query("DELETE FROM manufacturer WHERE id = $1", [id]);
