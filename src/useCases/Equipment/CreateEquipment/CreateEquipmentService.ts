@@ -9,20 +9,24 @@ export class CreateEquipmentService {
     private manufacturerRepository: IManufacturerRepository
   ) {}
 
-  async execute(data: ICreateEquipmentDTO) {
-    if (!data.model) {
+  async execute(dto: ICreateEquipmentDTO) {
+    if (!dto.model) {
       return new Error("The Equipment must have a model!");
     }
 
-    if (data.manufacturerId != null) {
+    if (!dto.manufacturerId) {
+      dto.manufacturerId = null;
+    }
+
+    if (dto.manufacturerId != null) {
       const manufacturer = await this.manufacturerRepository.findById(
-        data.manufacturerId
+        dto.manufacturerId
       );
       if (!manufacturer) {
         return new Error("This Manufacturer does not exists!");
       }
     }
-    const equipment = new Equipment(data);
+    const equipment = new Equipment(dto);
 
     return await this.equipmentRepository.save(equipment);
   }

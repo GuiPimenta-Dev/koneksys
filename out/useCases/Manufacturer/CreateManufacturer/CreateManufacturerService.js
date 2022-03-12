@@ -7,6 +7,9 @@ class CreateManufacturerService {
         this.manufacturersRepository = manufacturersRepository;
     }
     async execute(dto) {
+        if (!dto) {
+            return Error("You need to send the manufacturer`s name!");
+        }
         const manufacturer = new Manufacturer_1.Manufacturer(dto);
         return await this.manufacturersRepository.save(manufacturer);
     }

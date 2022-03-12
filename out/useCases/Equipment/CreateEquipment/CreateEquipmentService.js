@@ -7,17 +7,20 @@ class CreateEquipmentService {
         this.equipmentRepository = equipmentRepository;
         this.manufacturerRepository = manufacturerRepository;
     }
-    async execute(data) {
-        if (!data.model) {
+    async execute(dto) {
+        if (!dto.model) {
             return new Error("The Equipment must have a model!");
         }
-        if (data.manufacturerId != null) {
-            const manufacturer = await this.manufacturerRepository.findById(data.manufacturerId);
+        if (!dto.manufacturerId) {
+            dto.manufacturerId = null;
+        }
+        if (dto.manufacturerId != null) {
+            const manufacturer = await this.manufacturerRepository.findById(dto.manufacturerId);
             if (!manufacturer) {
                 return new Error("This Manufacturer does not exists!");
             }
         }
-        const equipment = new Equipment_1.Equipment(data);
+        const equipment = new Equipment_1.Equipment(dto);
         return await this.equipmentRepository.save(equipment);
     }
 }

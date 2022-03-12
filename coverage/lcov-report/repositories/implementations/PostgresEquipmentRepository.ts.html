@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>70/70</span>
+                <span class='fraction'>59/59</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>70/70</span>
+                <span class='fraction'>59/59</span>
             </div>
         
             
@@ -122,18 +122,7 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -150,14 +139,6 @@
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -178,17 +159,14 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -206,8 +184,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IEquipmentRepository } from "../IEquipmentRepository";
 import { Equipment } from "../../entities/Equipment";
 import { IUpdateEquipmentDTO } from "../../useCases/Equipment/UpdateEquipment/UpdateEquipmentDTO";
-&nbsp;
 import { Manufacturer } from "../../entities/Manufacturer";
+import { readQuery } from "../../utils/fc";
 const { Client } = require("pg");
 &nbsp;
 export class PostgresEquipmentsRepository implements IEquipmentRepository {
@@ -217,25 +195,17 @@ export class PostgresEquipmentsRepository implements IEquipmentRepository {
   }
 &nbsp;
   async findById(id: string): Promise&lt;string&gt; {
-    const { rows } = await this.db.query(
-      "SELECT id FROM equipment WHERE id = $1",
-      [id]
-    );
+    const { rows } = await this.db.query(readQuery("selectEquipment"), [id]);
     return rows[0];
   }
 &nbsp;
   async listOwner(id: string): Promise&lt;Manufacturer&gt; {
-    const { rows } = await this.db.query(
-      'SELECT m.id, name FROM manufacturer m \
-      LEFT JOIN equipment e ON m.id = e."manufacturerId" \
-      WHERE e.id = $1',
-      [id]
-    );
+    const { rows } = await this.db.query(readQuery("selectOwner"), [id]);
     return rows[0];
   }
 &nbsp;
   async save(equipment: Equipment): Promise&lt;Equipment&gt; {
-    await this.db.query("INSERT INTO equipment VALUES ($1,$2, $3, $4)", [
+    await this.db.query(readQuery("insertEquipment"), [
       equipment.id,
       equipment.model,
       equipment.serialNumber,
@@ -245,16 +215,11 @@ export class PostgresEquipmentsRepository implements IEquipmentRepository {
   }
 &nbsp;
   async listAll(): Promise&lt;Equipment[]&gt; {
-    const { rows } = await this.db.query(
-      'SELECT id,model, "serialNumber", "manufacturerId" FROM equipment'
-    );
+    const { rows } = await this.db.query(readQuery("selectEquipments"));
     return rows;
   }
   async listOne(id: string): Promise&lt;Equipment&gt; {
-    const { rows } = await this.db.query(
-      'SELECT id, model,  "serialNumber", "manufacturerId" FROM equipment WHERE id = $1',
-      [id]
-    );
+    const { rows } = await this.db.query(readQuery("selectEquipment"), [id]);
     return rows[0];
   }
 &nbsp;
@@ -262,15 +227,17 @@ export class PostgresEquipmentsRepository implements IEquipmentRepository {
     const { model, serialNumber } = await this.listOne(dto.id);
     dto.model = dto.model ? dto.model : model;
     dto.serialNumber = dto.serialNumber ? dto.serialNumber : serialNumber;
-    await this.db.query(
-      'UPDATE equipment SET model = $1, "serialNumber" = $2 ,"manufacturerId" = $3 WHERE id = $4',
-      [dto.model, dto.serialNumber, dto.manufacturerId, dto.id]
-    );
+    await this.db.query(readQuery("updateEquipment"), [
+      dto.model,
+      dto.serialNumber,
+      dto.manufacturerId,
+      dto.id,
+    ]);
 &nbsp;
     return dto;
   }
   async delete(id: string): Promise&lt;void&gt; {
-    await this.db.query("DELETE FROM equipment WHERE id = $1", [id]);
+    await this.db.query(readQuery("deleteEquipment"), [id]);
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -280,7 +247,7 @@ export class PostgresEquipmentsRepository implements IEquipmentRepository {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat Mar 12 2022 20:10:01 GMT-0300 (Horário Padrão de Brasília)
+                at Sat Mar 12 2022 20:43:13 GMT-0300 (Horário Padrão de Brasília)
             </div>
         <script src="../../prettify.js"></script>
         <script>

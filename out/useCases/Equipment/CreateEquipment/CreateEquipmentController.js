@@ -14,7 +14,7 @@ class CreateEquipmentController {
         if (result instanceof Error) {
             return res.status(400).json(result.message);
         }
-        return res.status(201).send();
+        return res.status(201).send(result);
     }
 }
 exports.CreateEquipmentController = CreateEquipmentController;

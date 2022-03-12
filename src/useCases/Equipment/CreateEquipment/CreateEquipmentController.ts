@@ -16,6 +16,6 @@ export class CreateEquipmentController {
       return res.status(400).json(result.message);
     }
 
-    return res.status(201).send();
+    return res.status(201).send(result);
   }
 }

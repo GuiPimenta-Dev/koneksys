@@ -2,11 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteManufacturerService = void 0;
 class DeleteManufacturerService {
-    constructor(manufacturersRepository) {
-        this.manufacturersRepository = manufacturersRepository;
+    constructor(manufacturerRepository) {
+        this.manufacturerRepository = manufacturerRepository;
     }
     async execute(id) {
-        await this.manufacturersRepository.delete(id);
+        const manufacturer = await this.manufacturerRepository.findById(id);
+        if (!manufacturer) {
+            return new Error("This Manufacturer does not exists!");
+        }
+        await this.manufacturerRepository.delete(id);
     }
 }
 exports.DeleteManufacturerService = DeleteManufacturerService;

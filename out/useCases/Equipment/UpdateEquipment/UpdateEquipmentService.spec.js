@@ -5,12 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const UpdateEquipmentService_1 = require("./UpdateEquipmentService");
 const CreateEquipmentService_1 = require("../CreateEquipment/CreateEquipmentService");
+const CreateManufacturerService_1 = require("../../Manufacturer/CreateManufacturer/CreateManufacturerService");
 const PostgresEquipmentRepository_1 = require("../../../repositories/implementations/PostgresEquipmentRepository");
 const PostgresManufacturerRepository_1 = require("../../../repositories/implementations/PostgresManufacturerRepository");
 const fc_1 = require("../../../utils/fc");
 const index_test_1 = __importDefault(require("../../../db/index-test"));
-const CreateEquipment_1 = require("../CreateEquipment");
-const CreateManufacturerService_1 = require("../../Manufacturer/CreateManufacturer/CreateManufacturerService");
 describe("Update Equipments", () => {
     let postgresEquipmentsRepository;
     let postgresManufacturersRepository;
@@ -59,13 +58,25 @@ describe("Update Equipments", () => {
         const manufacturerDTO = {
             name: "Test Manufacturer",
         };
-        const { id: manufacturerId, name } = await createManufacturerService.execute(manufacturerDTO);
-        const equipment = await CreateEquipment_1.createEquipmentService.execute(dto);
-        console.log(equipment);
-        // const updatedDTO = {
-        //   id,
-        //   manufacturerId: null,
-        // };
+        const { id: manufacturerId } = await createManufacturerService.execute(manufacturerDTO);
+        const { id, serialNumber } = await createEquipmentsService.execute(dto);
+        const updatedDTO = {
+            id,
+            manufacturerId: manufacturerId,
+        };
+        const sut = await updateEquipmentService.execute(updatedDTO);
+        expect(sut.manufacturerId).toEqual(manufacturerId);
+        expect(sut.serialNumber).toEqual(serialNumber);
+        expect(sut.model).toEqual(dto.model);
+    });
+    it("Should return an error when there is no manufacturer", async () => {
+        const { id } = await createEquipmentsService.execute(dto);
+        const updatedDTO = {
+            id,
+            manufacturerId: "fake manufacturer id",
+        };
+        const sut = await updateEquipmentService.execute(updatedDTO);
+        expect(sut.message).toEqual("This Manufacturer does not exists!");
     });
 });
 //# sourceMappingURL=UpdateEquipmentService.spec.js.map

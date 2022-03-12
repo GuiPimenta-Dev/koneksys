@@ -6,6 +6,10 @@ class ListManufacturerService {
         this.manufacturerRepository = manufacturerRepository;
     }
     async execute(id) {
+        const manufacturer = await this.manufacturerRepository.findById(id);
+        if (!manufacturer) {
+            return new Error("This Manufacturer does not exists!");
+        }
         return await this.manufacturerRepository.listOne(id);
     }
 }

@@ -7,17 +7,13 @@ class CreateManufacturerController {
     }
     async handle(req, res) {
         const { name } = req.body;
-        try {
-            await this.createManufacturerService.execute({
-                name,
-            });
-            return res.status(201).send();
+        const result = await this.createManufacturerService.execute({
+            name,
+        });
+        if (result instanceof Error) {
+            return res.status(400).json(result.message);
         }
-        catch (err) {
-            return res.status(400).json({
-                message: err.message || "Unexpected error.",
-            });
-        }
+        return res.status(201).send(result);
     }
 }
 exports.CreateManufacturerController = CreateManufacturerController;
